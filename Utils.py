@@ -41,11 +41,11 @@ def distance_calc(test, train, p):
     dist = 0
     for i in train:
         k = 0
-        while k < len(i) - 1:
+        while k < len(test) - 1:
             dist += abs(float(i[k]) - float(test[k])) ** p
-            if p == 2:
-                dist = sqrt(dist)
             k += 1
+        if p == 2:
+            dist = sqrt(dist)
         distance_list.append([i[-1], dist])
         dist = 0
         distance_list.sort(key=itemgetter(1), reverse=False)
@@ -112,7 +112,7 @@ def central_create(min_val, max_val, k_value, dimension, input_data, case):
         if case:  # random point creation
             for j in range(dimension):
                 a = uniform(min_val, max_val)
-                point.append("{0:.2f}".format(a))
+                point.append(float("{0:.2f}".format(a)))
             point.append(i)
         else:  # create point from dataset
             index = randint(0, len(input_data))
