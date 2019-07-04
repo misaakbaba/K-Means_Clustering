@@ -76,7 +76,19 @@ def scater_graph(input_data, central_points):
     plt.close()
 
 
+def center_change_amount(old_centrals, new_centrals, dimension):
+    i, change = 0, 0
+    while i < len(old_centrals):
+        j = 0
+        while j < dimension:
+            change += abs(float(new_centrals[i][j]) - float(old_centrals[i][j]))
+            j += 1
+        i += 1
+    return change
+
+
 def iterate(input_list, centrals):
+    new_centrals = []
     data1 = classifier(input_list, 0)
     data2 = classifier(input_list, 1)
     data3 = classifier(input_list, 2)
@@ -87,16 +99,15 @@ def iterate(input_list, centrals):
     center2.append(1)
     center3 = meanof_data(data3, 4, centrals[2])
     center3.append(2)
-    centrals.clear()
-    centrals.append(center1)
-    centrals.append(center2)
-    centrals.append(center3)
-    # print(centrals)
-    result_list = k_means(data, centrals, 2)
-    scater_graph(result_list, centrals)
-    print(central_points)
-    return result_list
-
+    # centrals.clear()
+    new_centrals.append(center1)
+    new_centrals.append(center2)
+    new_centrals.append(center3)
+    # print(new_centrals)
+    result_list = k_means(data, new_centrals, 2)
+    scater_graph(result_list, new_centrals)
+    # print(central_points)
+    return result_list, new_centrals, center_change_amount(centrals, new_centrals, 4)
 
 
 if __name__ == '__main__':
@@ -109,7 +120,10 @@ if __name__ == '__main__':
     result_list = k_means(data, central_points, 2)  # result list type [data,central_point]
     scater_graph(result_list, central_points)
     # print(central_points)
-    result_list = iterate(result_list, central_points)
-    result_list = iterate(result_list, central_points)
-    result_list = iterate(result_list, central_points)
-    result_list = iterate(result_list, central_points)
+    change_amount, treshold = 90, 0.3
+    while change_amount > treshold:
+        result_list, central_points, change_amount = iterate(result_list, central_points)
+        print(change_amount)
+    # result_list = iterate(result_list, central_points)
+    # result_list = iterate(result_list, central_points)
+    # result_list = iterate(result_list, central_points)
