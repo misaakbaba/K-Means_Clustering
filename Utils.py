@@ -32,7 +32,12 @@ def parse_arr(data):
     ret_list = []
     for i in data:
         temp = i.split(',')
+        # j = 0
+        # while j < len(temp) - 1:
+        #     temp[j] = float(temp[j])
+        #     j += 1
         ret_list.append(temp)
+
     return ret_list
 
 
@@ -128,5 +133,5 @@ def k_means(input_data, central_points, p_value):
     result = []
     for i in input_data:
         distance = distance_calc(test=i, train=central_points, p=p_value)
-        result.append([i, distance[0][0]])  #
+        result.append([i, distance[0][0]])
     return result
