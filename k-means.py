@@ -146,7 +146,7 @@ def success_rate(result_data, k_val):
     for i in central_data:
         words_to_count = (word for word in i if word[:1].isupper())
         c = Counter(words_to_count)
-        temp = c.most_common(1)
+        temp = c.most_common(3)
         # common_type.append(temp[0])
         print(temp)
     return common_type
